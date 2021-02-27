@@ -38,5 +38,55 @@ Space complexity: O(N), to store the result of split by spaces.
 
 
 class Solution:
-    def reverseWords(self, s: str) -> str:
+    def reverseWords1(self, s: str) -> str:
         return ' '.join(reversed(s.split()))
+
+
+    def reverseWords2(self, s: str) -> str:
+        def trimString(str):
+            i, j = 0, 0
+            wordCount = 0
+            while True:
+                while j < len(str) and str[j] == ' ':
+                    j += 1
+                if j == len(str):
+                    break
+                if wordCount > 0:
+                    str[i] = ' '
+                    i += 1
+                while j < len(str) and str[j] != ' ':
+                    str[i] = str[j]
+                    i += 1
+                    j += 1
+                wordCount += 1
+            return str[:i]
+
+        def reverseString(str, l, r):
+            while l < r:
+                str[l], str[r] = str[r], str[l]
+                l += 1
+                r -= 1
+
+        str = []
+        for ch in s:
+            str.append(ch)
+        str = trimString(str)
+        reverseString(str, 0, len(str)-1)
+        i = 0
+        while i < len(str):
+            j = i
+            while j < len(str) and str[j] != ' ':
+                j += 1
+            reverseString(str, i, j-1)
+            i = j + 1
+        return ''.join(str)
+
+
+if __name__ == '__main__':
+    string1 = '  I   love     Python    '
+    string2 = ''
+    o = Solution()
+    print(o.reverseWords1(string1))
+    print(o.reverseWords1(string2))
+    print(o.reverseWords2(string1))
+    print(o.reverseWords2(string2))
