@@ -13,23 +13,30 @@ output = 'abc_ed_ef'
 
 class Solution:
     def removeSpace(self, str):
-        res = ''
-        j = 0
+        i, j = 0, 0
+        wordCount = 0
         while True:
             while j < len(str) and str[j] == ' ':
                 j += 1
             if j == len(str):
                 break
-            if res:
-                res += ' '
+            if wordCount > 0:
+                str[i] = ' '
+                i += 1
             while j < len(str) and str[j] != ' ':
-                res += str[j]
+                str[i] = str[j]
+                i += 1
                 j += 1
-        return res
+            wordCount += 1
+        return str[:i]
+
 
 if __name__ == '__main__':
-    str1 = '  I   love  Python and Leetcode   '
+    str = []
+    for ch in '  I   love  Python and Leetcode   ':
+        str.append(ch)
+    print(str)
     o = Solution()
-    print(o.removeSpace(str1))
+    print(o.removeSpace(str))
 
 
